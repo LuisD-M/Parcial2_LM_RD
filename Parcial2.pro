@@ -8,6 +8,7 @@ CONFIG += c++17 cmdline
 
 SOURCES += \
         ficha.cpp \
+        jugador.cpp \
         main.cpp \
         tablero.cpp
 
@@ -18,4 +19,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     ficha.h \
+    jugador.h \
     tablero.h

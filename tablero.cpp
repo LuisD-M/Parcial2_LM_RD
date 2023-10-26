@@ -19,17 +19,17 @@ tablero::~tablero()
     }
 }
 
-void tablero::initablero()
+void tablero::initablero(const jugador& jugador1, const jugador& jugador2)
 {
     for(unsigned short int i=0; i<filas; i++){
         for(unsigned short int j=0; j<columnas; j++)
             casillas[i][j] = new ficha(' ');                   //Crean las 64 fichas con espacio vacio                             //puntero nulo para casillas vacias
     }
 
-    casillas[3][3]->setidd('*');                              //asignan las 4 fichas iniciales
-    casillas[4][4]->setidd('*');
-    casillas[3][4]->setidd('-');
-    casillas[4][3]->setidd('-');
+    casillas[3][3]->setidd(jugador1.getidd());                              //asignan las 4 fichas iniciales
+    casillas[4][4]->setidd(jugador1.getidd());
+    casillas[3][4]->setidd(jugador2.getidd());
+    casillas[4][3]->setidd(jugador2.getidd());
 }
 
 void tablero::impritablero() const

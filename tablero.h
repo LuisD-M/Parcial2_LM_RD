@@ -3,6 +3,7 @@
 #include <QObject>
 
 #include "ficha.h"
+#include "jugador.h"
 
 const short int filas=8;
 const short int columnas=8;
@@ -15,7 +16,7 @@ private:
 public:
     tablero();                             //constructor
     ~tablero();                            //destructor
-    void initablero();                     //iniciar el tablero
+    void initablero(const jugador& jugador1, const jugador& jugador2);                     //iniciar el tablero
     void impritablero() const;             //imprimir tablero
 
 };
