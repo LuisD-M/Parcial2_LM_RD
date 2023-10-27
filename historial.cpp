@@ -5,3 +5,8 @@ historial::historial(QObject *parent)
 {
 
 }
+
+void historial::VerResultados()
+{
+
+}
