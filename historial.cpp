@@ -1,12 +1,12 @@
-#include "historial.h"
+//#include "historial.h"
 
-historial::historial(QObject *parent)
-    : QObject{parent}
-{
+//historial::historial(QObject *parent)
+//    : QObject{parent}
+//{
 
-}
+//}
 
-void historial::VerResultados()
-{
+//void historial::VerResultados()
+//{
 
-}
+//}

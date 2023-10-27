@@ -22,7 +22,8 @@ public:
     ~tablero();                            //destructor
     void initablero();                   //iniciar el tablero con los jugadores
     void impritablero() const;             //imprimir tablero
-    bool movimientovalido(unsigned short int posfila, unsigned short int poscolumna) const;
+    bool movimientovalido(unsigned short int posfila, unsigned short int poscolumna, unsigned int short numerojugardor) const;
+    void posfilvalida(unsigned short posfila, unsigned short poscolumna, char idenemigo, char idpropio, unsigned short *pos, unsigned short posin) const;
 };
 
 #endif // TABLERO_H

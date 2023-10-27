@@ -1,16 +1,16 @@
-#ifndef HISTORIAL_H
-#define HISTORIAL_H
+//#ifndef HISTORIAL_H
+//#define HISTORIAL_H
 
-#include <QObject>
+//#include <QObject>
 
-class historial : public QObject
-{
-    Q_OBJECT
-public:
-    explicit historial(QObject *parent = nullptr);
+//class historial : public QObject
+//{
+//    Q_OBJECT
+//public:
+//    explicit historial(QObject *parent = nullptr);
 
-signals:
+//signals:
 
-};
+//};
 
-#endif // HISTORIAL_H
+//#endif // HISTORIAL_H

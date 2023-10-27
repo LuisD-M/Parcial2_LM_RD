@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
             tablero tablero1(jugador1,jugador2);
             tablero1.initablero();
             tablero1.impritablero();
-
+            tablero1.movimientovalido(4,2,1);
         }
 
         else {cout<<"Opcion 2"<<endl;}

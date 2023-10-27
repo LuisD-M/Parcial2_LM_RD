@@ -59,16 +59,61 @@ void tablero::impritablero() const
     }
 }
 
-bool tablero::movimientovalido(unsigned short int posfila, unsigned short int poscolumna) const
+bool tablero::movimientovalido(unsigned short int posfila, unsigned short int poscolumna, unsigned int short numerojugador) const
 {
+    unsigned int short pos[filas];
     char idenemigo;
     char idpropio;
-    bool enemiga = false;
+    bool enemiga = true;
     bool encierro = false;
-    // encierro de fila
-    for (int i = 0; i <= columnas; i++)
+    if (numerojugador == 1)
     {
-        casillas[posfila][i]->getidd();
+        idpropio = jugador1.getidd();
+        idenemigo = jugador2.getidd();
+    }else
+    {
+        idpropio = jugador2.getidd();
+        idenemigo = jugador1.getidd();
     }
 
+    // encierro de fila izquierda
+    posfilvalida(posfila, poscolumna, idenemigo, idpropio, pos, 0);
+    cout << pos[1] << endl;
+    return true;
+}
+
+void tablero::posfilvalida(unsigned short posfila, unsigned short poscolumna, char idenemigo, char idpropio, unsigned short *pos, unsigned short posin) const
+{
+    // encierro de fila izquierda
+    for (int i = poscolumna-1; i >= 1; i--)
+    {
+        if ((casillas[posfila][i]->getidd() == idenemigo) && (casillas[posfila][i-1]->getidd() == idenemigo || casillas[posfila][i-1]->getidd() == idpropio))
+        {
+            if((casillas[posfila][i]->getidd() == idenemigo) && (casillas[posfila][i-1]->getidd() == idpropio))
+            {
+                pos[0] = i-1;
+                break;
+            }
+        }else
+        {
+            pos[posin] = filas+1;
+            break;
+        }
+    }
+    // encierro de fila derecha
+    for (int i = poscolumna+1; i <= filas-1; i++)
+    {
+        if ((casillas[posfila][i]->getidd() == idenemigo) && (casillas[posfila][i+1]->getidd() == idenemigo || casillas[posfila][i+1]->getidd() == idpropio))
+        {
+            if((casillas[posfila][i]->getidd() == idenemigo) && (casillas[posfila][i+1]->getidd() == idpropio))
+            {
+                pos[1] = i+1;
+                break;
+            }
+        }else
+        {
+            pos[posin+1] = filas+1;
+            break;
+        }
+    }
 }
