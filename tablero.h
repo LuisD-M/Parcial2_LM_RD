@@ -16,7 +16,7 @@ private:
 public:
     tablero();                             //constructor
     ~tablero();                            //destructor
-    void initablero(const jugador& jugador1, const jugador& jugador2);                     //iniciar el tablero
+    void initablero(const jugador& jugador1, const jugador& jugador2);                   //iniciar el tablero con los jugadores
     void impritablero() const;             //imprimir tablero
 
 };
