@@ -12,41 +12,50 @@ int menu();
 int main(int argc, char *argv[]){
     QCoreApplication a(argc, argv);
 
-    short int opcion=1;
+    bool run;
+    unsigned short opcion;
 
-    opcion=menu();
-
-    historial Historial1;
-
-    while(opcion!=0){
-
-        if(opcion==1){
-
+    do{
+        opcion= menu();
+        switch (opcion) {
+        case 0:
+            run = false;
+            break;
+        case 1:
+        {
             jugador jugador1("Sara", '*');
             jugador jugador2("Luis", '-');
-
             tablero tablero1(jugador1,jugador2);
             tablero1.initablero();
-            tablero1.impritablero();
-
+            unsigned int jugador = 1;
+            while(true)
+            {
+                char fil,col;
+                tablero1.impritablero();
+                cout << "jugador " << jugador << endl;
+                cout << "ingrese la fila:";
+                cin >> fil;
+                cout << "ingrese la columna:";
+                cin >> col;
+                tablero1.movimientovalido(fil-'0',col-'A',jugador);
+                if (jugador == 1) jugador = 2;
+                else jugador = 1;
+            }
         }
-
-        else if(opcion==2){
-            cout<<endl<<" -----Historial de partidas -----"<<endl;
-            Historial1.VerResultados();
-            cout<<endl;
-        }
-
-        else{
-            cout<<"Juego finalizado."<<endl<<endl;
+        case 2:
+        {
             break;
         }
+        default:
+        {
+            cout << "opcion invalida" << endl;
+            break;
+        }
+        }
 
-        opcion=menu();
+        cout<<"Partida finalizada."<<endl<<endl;
+    }while(run);
 
-    }
-
-    cout<<"El juego a finalizado."<<endl;
     return a.exec();
 }
 
