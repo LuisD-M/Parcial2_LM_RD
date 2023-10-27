@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include "tablero.h"
 #include "jugador.h"
+#include "historial.h"
 #include <iostream>
 using namespace std;
 
@@ -15,6 +16,8 @@ int main(int argc, char *argv[]){
 
     opcion=menu();
 
+    historial Historial1;
+
     while(opcion!=0){
 
         if(opcion==1){
@@ -28,9 +31,17 @@ int main(int argc, char *argv[]){
 
         }
 
-        else {cout<<"Opcion 2"<<endl;}
+        else if(opcion==2){
+            cout<<endl<<" -----Historial de partidas -----"<<endl;
+            Historial1.VerResultados();
+            cout<<endl;
+        }
 
-        cout<<"Partida finalizada."<<endl<<endl;
+        else{
+            cout<<"Juego finalizado."<<endl<<endl;
+            break;
+        }
+
         opcion=menu();
 
     }
