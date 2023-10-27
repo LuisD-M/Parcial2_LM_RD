@@ -3,14 +3,6 @@
 #include <iostream>
 using namespace std;
 
-tablero::tablero()
-{
-    for(unsigned short int i=0; i<filas; i++){
-        for(unsigned short int j=0; j<columnas; j++)
-            casillas[i][j] = nullptr;                             //puntero nulo para casillas vacias
-    }
-}
-
 tablero::tablero(const jugador &jugador1, const jugador &jugador2)
 {
     for(unsigned short int i=0; i<filas; i++){
@@ -71,4 +63,19 @@ bool tablero::movimientovalido(unsigned short int posfila, unsigned short int po
         casillas[posfila][i]->getidd();
     }
 
+}
+
+ficha *tablero::getCasilla(unsigned short fila, unsigned short columna) const
+{
+    return casillas[fila][columna];
+}
+
+char tablero::jugador1Idd() const
+{
+    return jugador1.getidd();
+}
+
+char tablero::Jugador2Idd() const
+{
+    return jugador2.getidd();
 }

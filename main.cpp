@@ -3,10 +3,15 @@
 #include "jugador.h"
 #include "historial.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+
 using namespace std;
 
 
 int menu();
+void leerHistorial();
 
 
 int main(int argc, char *argv[]){
@@ -33,7 +38,7 @@ int main(int argc, char *argv[]){
 
         else if(opcion==2){
             cout<<endl<<" -----Historial de partidas -----"<<endl;
-            Historial1.VerResultados();
+            leerHistorial();
             cout<<endl;
         }
 
@@ -62,4 +67,30 @@ int menu(){
 
 
     return x;
+}
+
+void leerHistorial(){
+    string nom1,pun1,nom2,pun2,linea;
+
+    ifstream archivo("HistorialPartidas.txt");
+
+    while (getline(archivo, linea)) {
+        stringstream ss(linea);
+        string valor;
+
+        if (getline(ss, valor, ',')) nom1 = (valor);
+        if (getline(ss, valor, ',')) pun1 = (valor);
+        if (getline(ss, valor, ',')) nom2 = (valor);
+        if (getline(ss, valor, ',')) pun2 = (valor);
+
+        cout<<nom1<<":"<<pun1<<" ; "<<nom2<<":"<<pun2<<endl;
+    }
+    archivo.close();
+
+
+
+
+
+
+
 }
