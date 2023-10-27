@@ -11,6 +11,16 @@ tablero::tablero()
     }
 }
 
+tablero::tablero(const jugador &jugador1, const jugador &jugador2)
+{
+    for(unsigned short int i=0; i<filas; i++){
+        for(unsigned short int j=0; j<columnas; j++)
+            casillas[i][j] = nullptr;                             //puntero nulo para casillas vacias
+    }
+    this->jugador1 = jugador1;
+    this->jugador2 = jugador2;
+}
+
 tablero::~tablero()
 {
     for(unsigned short int i=0; i<filas; i++){
@@ -19,7 +29,7 @@ tablero::~tablero()
     }
 }
 
-void tablero::initablero(const jugador& jugador1, const jugador& jugador2)
+void tablero::initablero()
 {
     for(unsigned short int i=0; i<filas; i++){
         for(unsigned short int j=0; j<columnas; j++)
@@ -47,4 +57,18 @@ void tablero::impritablero() const
 
         cout<<endl<<"   -------------------------------"<<endl;
     }
+}
+
+bool tablero::movimientovalido(unsigned short int posfila, unsigned short int poscolumna) const
+{
+    char idenemigo;
+    char idpropio;
+    bool enemiga = false;
+    bool encierro = false;
+    // encierro de fila
+    for (int i = 0; i <= columnas; i++)
+    {
+        casillas[posfila][i]->getidd();
+    }
+
 }
