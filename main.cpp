@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include "tablero.h"
 #include "jugador.h"
-#include "historial.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -17,22 +17,25 @@ void leerHistorial();
 int main(int argc, char *argv[]){
     QCoreApplication a(argc, argv);
 
+    string nombre1, nombre2;
     short int opcion=1;
 
     opcion=menu();
-
-    historial Historial1;
 
     while(opcion!=0){
 
         if(opcion==1){
 
-            jugador jugador1("Sara", '*');
-            jugador jugador2("Luis", '-');
+            cout<<"Ingrese el nombre del jugador 1:"; cin>>nombre1;
+            cout<<"Ingrese el nombre del jugador 2:"; cin>>nombre2;
+            jugador jugador1(nombre1, '*');
+            jugador jugador2(nombre2, '-');
 
             tablero tablero1(jugador1,jugador2);
             tablero1.initablero();
             tablero1.impritablero();
+
+            tablero1.EscArchivo();
 
         }
 
@@ -70,7 +73,7 @@ int menu(){
 }
 
 void leerHistorial(){
-    string nom1,pun1,nom2,pun2,linea;
+    string nom1,pun1,nom2,pun2,fecha,linea;
 
     ifstream archivo("HistorialPartidas.txt");
 
@@ -82,15 +85,10 @@ void leerHistorial(){
         if (getline(ss, valor, ',')) pun1 = (valor);
         if (getline(ss, valor, ',')) nom2 = (valor);
         if (getline(ss, valor, ',')) pun2 = (valor);
+        if (getline(ss, valor, ',')) fecha = (valor);
 
-        cout<<nom1<<":"<<pun1<<" ; "<<nom2<<":"<<pun2<<endl;
+        cout<<nom1<<":"<<pun1<<" VS "<<nom2<<":"<<pun2<<"  Fecha: "<<fecha<<endl;
     }
     archivo.close();
-
-
-
-
-
-
 
 }
