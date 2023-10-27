@@ -1,15 +1,21 @@
 #ifndef HISTORIAL_H
 #define HISTORIAL_H
-
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include <QObject>
 
-class historial : public QObject
-{
-    Q_OBJECT
-public:
-    explicit historial(QObject *parent = nullptr);
 
-signals:
+using namespace std;
+
+class historial
+{
+
+public:
+    historial();
+
+    void VerResultados();
 
 };
 
