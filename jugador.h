@@ -13,6 +13,7 @@ private:
     string nombre;                             //nombre del jugador
 
 public:
+    jugador();
     jugador(const string& nombre, char idd);
     char getidd() const;
     string getnombre() const;
