@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include "tablero.h"
 #include "jugador.h"
+#include "historial.h"
 #include <iostream>
 using namespace std;
 
@@ -51,9 +52,6 @@ int main(int argc, char *argv[]){
             break;
         }
         }
-
-
-
 
         cout<<"Partida finalizada."<<endl<<endl;
     }while(run);
