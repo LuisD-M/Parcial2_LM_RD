@@ -1,5 +1,9 @@
 #include "jugador.h"
 
+jugador::jugador()
+{
+}
+
 jugador::jugador(const string& nombre, char idd)
 {
     this->nombre=nombre;

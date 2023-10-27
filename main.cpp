@@ -22,8 +22,8 @@ int main(int argc, char *argv[]){
             jugador jugador1("Sara", '*');
             jugador jugador2("Luis", '-');
 
-            tablero tablero1;
-            tablero1.initablero(jugador1,jugador2);
+            tablero tablero1(jugador1,jugador2);
+            tablero1.initablero();
             tablero1.impritablero();
 
         }
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]){
 }
 
 int menu(){
-    short int x=5;
+    unsigned short int x=5;
     cout<<"---------- Menu de juego ----------"<<endl;
     cout<<"1. Iniciar nueva partida."<<endl;
     cout<<"2. Ver historial de partidas."<<endl;
