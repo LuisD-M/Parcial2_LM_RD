@@ -17,11 +17,18 @@ private:
     jugador jugador2;
 
 public:
-    tablero();                             //constructor
     tablero(const jugador &jugador1, const jugador &jugador2);
     ~tablero();                            //destructor
     void initablero();                   //iniciar el tablero con los jugadores
     void impritablero() const;             //imprimir tablero
+    void EscArchivo();
+
+
+
+
+
+
+
     bool movimientovalido(short posfila, short poscolumna, unsigned short numerojugador);
 };
 

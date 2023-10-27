@@ -1,15 +1,16 @@
 #include "tablero.h"
-
+#include <QDateTime>
 #include <iostream>
+#include <QDebug>
+#include <fstream>
+#include <sstream>
+#include <string>
+
+
+
 using namespace std;
 
-tablero::tablero()
-{
-    for(unsigned short int i=0; i<filas; i++){
-        for(unsigned short int j=0; j<columnas; j++)
-            casillas[i][j] = nullptr;                             //puntero nulo para casillas vacias
-    }
-}
+string int2str(unsigned short int a);
 
 tablero::tablero(const jugador &jugador1, const jugador &jugador2)
 {
@@ -277,3 +278,53 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
 //    cout << endl;
 }
 
+void tablero::EscArchivo()
+{
+    int cont1=0, cont2=0;
+    string lineaTexto, co1, co2, fechaYHora;
+
+    for(unsigned short int i=0; i<filas; i++){
+        for(unsigned short int j=0; j<columnas; j++){
+            if(casillas[i][j]->getidd() == jugador1.getidd())
+                cont1++;
+
+            else if(casillas[i][j]->getidd() == jugador2.getidd())
+                cont2++;
+        }
+    }
+
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    QString dateTimeString = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
+
+
+    fechaYHora = dateTimeString.toStdString();
+
+    co1 = int2str(cont1);
+    co2 = int2str(cont2);
+
+    lineaTexto = jugador1.getnombre() + "," + co1 + "," + jugador2.getnombre() + "," + co2 + "," + fechaYHora;
+
+    ofstream in("HistorialPartidas.txt",ios::app);
+
+    if (in.is_open()){
+        in<<lineaTexto<<endl;
+        in.close();
+    }
+    else
+        cout<<"El archivo de hitorial no ce pudo abrir."<<endl;
+}
+
+string int2str(unsigned short int a){
+    int c=0,i=1;
+    char e;
+    string b;
+    for(;(a/i);i=i*10)
+        c++;
+    for(int j=0;j<c;j++){
+        i/=10;
+        e=(a/i)+48;
+        b.push_back(e);
+        a-=(a/i)*i;
+    }
+    return b;
+}
