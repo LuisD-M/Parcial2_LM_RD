@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include "jugador.h"
 #include "tablero.h"
+#include "ficha.h"
 
 #include <iostream>
 #include <fstream>
@@ -16,6 +17,89 @@ void leerHistorial();
 
 int main(int argc, char *argv[]){
     QCoreApplication a(argc, argv);
+
+//    jugador jugador1("Raul", '*');
+//    jugador jugador2("Pepe", '-');
+//    tablero tablero1(jugador1, jugador2);
+//    tablero1.initablero();
+//    ficha *casillas[filas][columnas];
+//    tablero1.getCasillas(casillas);
+//    casillas[0]['A'-'A'] = new ficha('*');
+//    casillas[0]['B'-'A'] = new ficha('-');
+//    casillas[0]['C'-'A'] = new ficha(' ');
+//    casillas[0]['D'-'A'] = new ficha('*');
+//    casillas[0]['E'-'A'] = new ficha('*');
+//    casillas[0]['F'-'A'] = new ficha('*');
+//    casillas[0]['G'-'A'] = new ficha('*');
+//    casillas[0]['H'-'A'] = new ficha('*');
+
+//    casillas[1]['A'-'A'] = new ficha('-');
+//    casillas[1]['B'-'A'] = new ficha('*');
+//    casillas[1]['C'-'A'] = new ficha(' ');
+//    casillas[1]['D'-'A'] = new ficha(' ');
+//    casillas[1]['E'-'A'] = new ficha('-');
+//    casillas[1]['F'-'A'] = new ficha(' ');
+//    casillas[1]['G'-'A'] = new ficha('*');
+//    casillas[1]['H'-'A'] = new ficha(' ');
+
+//    casillas[2]['A'-'A'] = new ficha(' ');
+//    casillas[2]['B'-'A'] = new ficha('-');
+//    casillas[2]['C'-'A'] = new ficha('*');
+//    casillas[2]['D'-'A'] = new ficha(' ');
+//    casillas[2]['E'-'A'] = new ficha('-');
+//    casillas[2]['F'-'A'] = new ficha('*');
+//    casillas[2]['G'-'A'] = new ficha('-');
+//    casillas[2]['H'-'A'] = new ficha('-');
+
+//    casillas[3]['A'-'A'] = new ficha(' ');
+//    casillas[3]['B'-'A'] = new ficha(' ');
+//    casillas[3]['C'-'A'] = new ficha('-');
+//    casillas[3]['D'-'A'] = new ficha('*');
+//    casillas[3]['E'-'A'] = new ficha('*');
+//    casillas[3]['F'-'A'] = new ficha(' ');
+//    casillas[3]['G'-'A'] = new ficha(' ');
+//    casillas[3]['H'-'A'] = new ficha(' ');
+
+//    casillas[4]['A'-'A'] = new ficha(' ');
+//    casillas[4]['B'-'A'] = new ficha(' ');
+//    casillas[4]['C'-'A'] = new ficha('-');
+//    casillas[4]['D'-'A'] = new ficha('*');
+//    casillas[4]['E'-'A'] = new ficha('*');
+//    casillas[4]['F'-'A'] = new ficha(' ');
+//    casillas[4]['G'-'A'] = new ficha(' ');
+//    casillas[4]['H'-'A'] = new ficha(' ');
+
+//    casillas[5]['A'-'A'] = new ficha(' ');
+//    casillas[5]['B'-'A'] = new ficha(' ');
+//    casillas[5]['C'-'A'] = new ficha('*');
+//    casillas[5]['D'-'A'] = new ficha('-');
+//    casillas[5]['E'-'A'] = new ficha(' ');
+//    casillas[5]['F'-'A'] = new ficha(' ');
+//    casillas[5]['G'-'A'] = new ficha(' ');
+//    casillas[5]['H'-'A'] = new ficha(' ');
+
+//    casillas[6]['A'-'A'] = new ficha(' ');
+//    casillas[6]['B'-'A'] = new ficha('*');
+//    casillas[6]['C'-'A'] = new ficha(' ');
+//    casillas[6]['D'-'A'] = new ficha(' ');
+//    casillas[6]['E'-'A'] = new ficha('-');
+//    casillas[6]['F'-'A'] = new ficha(' ');
+//    casillas[6]['G'-'A'] = new ficha(' ');
+//    casillas[6]['H'-'A'] = new ficha(' ');
+
+//    casillas[7]['A'-'A'] = new ficha(' ');
+//    casillas[7]['B'-'A'] = new ficha(' ');
+//    casillas[7]['C'-'A'] = new ficha(' ');
+//    casillas[7]['D'-'A'] = new ficha(' ');
+//    casillas[7]['E'-'A'] = new ficha(' ');
+//    casillas[7]['F'-'A'] = new ficha(' ');
+//    casillas[7]['G'-'A'] = new ficha(' ');
+//    casillas[7]['H'-'A'] = new ficha(' ');
+
+//    tablero1.setCasillas(casillas);
+//    tablero1.impritablero();
+//    tablero1.casillasjugables(2);
+//    tablero1.impritablero();
 
     bool run;
     unsigned short opcion;
@@ -47,6 +131,12 @@ int main(int argc, char *argv[]){
                 cin >> fil;
                 cout << "ingrese la columna:";
                 cin >> col;
+                if (!tablero1.casillavalida(fil-'0',col-'A'))
+                {
+                    cout << "!!!casilla invalida!!!" << endl;
+                    tablero1.limpiarcasillas();
+                    continue;
+                }
                 tablero1.limpiarcasillas();
                 tablero1.volteacasillas(fil-'0',col-'A',jugador);
                 if (jugador == 1) jugador = 2;

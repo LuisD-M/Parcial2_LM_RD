@@ -25,6 +25,9 @@ public:
     bool casillasjugables(unsigned short jugador);
     void limpiarcasillas();
     void EscArchivo();
+    bool casillavalida(unsigned short posfila, unsigned short poscolumna);
+    void setCasillas(ficha* casillas[filas][columnas]);
+    void getCasillas(ficha* casillas[filas][columnas]);
 };
 
 #endif // TABLERO_H
