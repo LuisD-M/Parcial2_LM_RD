@@ -204,7 +204,7 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
         }
         i++;
     }
-    // encierro de diagonal izquierda abajo
+    // encierro de diagonal derecha abajo
     i = 1;
     while(1 + i + poscolumna <= 7 && 1 + i + posfila <= 7)
     {
@@ -273,8 +273,8 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
     for (int i = 0; poscolumna+i < pos[7][1]; i++)
     {
         if (pos[7][1] == 9) break;
-        delete casillas[posfila+1][poscolumna+i];
-        casillas[posfila+1][poscolumna+i] = new ficha(idpropio);
+        delete casillas[posfila+i][poscolumna+i];
+        casillas[posfila+i][poscolumna+i] = new ficha(idpropio);
     }
     return true;
 //    for (int i = 0; i < 8; i++){

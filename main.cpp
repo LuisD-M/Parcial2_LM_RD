@@ -33,18 +33,21 @@ int main(int argc, char *argv[]){
             cout<<"Ingrese el nombre del jugador 2:"; cin>>nombre2;
             jugador jugador1(nombre1, '*');
             jugador jugador2(nombre2, '-');
+            jugador jugadores[2] = {jugador1, jugador2};
             tablero tablero1(jugador1,jugador2);
             tablero1.initablero();
             unsigned int jugador = 1;
             while(true)
             {
                 char fil,col;
+                if (!tablero1.casillasjugables(jugador)) break;
                 tablero1.impritablero();
-                cout << "jugador " << jugador << endl;
+                cout << "jugador " << jugadores[jugador-1].getnombre() << '(' << jugadores[jugador-1].getidd() << ')' <<endl;
                 cout << "ingrese la fila:";
                 cin >> fil;
                 cout << "ingrese la columna:";
                 cin >> col;
+                tablero1.limpiarcasillas();
                 tablero1.volteacasillas(fil-'0',col-'A',jugador);
                 if (jugador == 1) jugador = 2;
                 else jugador = 1;
