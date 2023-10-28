@@ -21,15 +21,13 @@ public:
     ~tablero();                            //destructor
     void initablero();                   //iniciar el tablero con los jugadores
     void impritablero() const;             //imprimir tablero
+    bool volteacasillas(short posfila, short poscolumna, unsigned short numerojugador, bool mode = false);
+    bool casillasjugables(unsigned short jugador);
+    void limpiarcasillas();
     void EscArchivo();
-
-
-
-
-
-
-
-    bool movimientovalido(short posfila, short poscolumna, unsigned short numerojugador);
+    bool casillavalida(unsigned short posfila, unsigned short poscolumna);
+    void setCasillas(ficha* casillas[filas][columnas]);
+    void getCasillas(ficha* casillas[filas][columnas]);
 };
 
 #endif // TABLERO_H
