@@ -59,7 +59,7 @@ void tablero::impritablero() const
     }
 }
 
-bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short numerojugador)
+bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short numerojugador, bool mode)
 {
     unsigned short pos[filas][2];
     for (int i = 0; i < filas; i++) for (int j = 0; j < 2; j++) pos[i][j] = 9;
@@ -74,6 +74,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         idpropio = jugador2.getidd();
         idenemigo = jugador1.getidd();
     }
+
     // encierro de fila izquierda
     for (int i = poscolumna-1; i >= 1; i--)
     {
@@ -81,6 +82,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         {
             if((casillas[posfila][i]->getidd() == idenemigo) && (casillas[posfila][i-1]->getidd() == idpropio))
             {
+                if (mode) return true;
                 pos[0][0] = posfila;
                 pos[0][1] = i-1;
                 break;
@@ -97,6 +99,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         {
             if((casillas[posfila][i]->getidd() == idenemigo) && (casillas[posfila][i+1]->getidd() == idpropio))
             {
+                if (mode) return true;
                 pos[1][0] = posfila;
                 pos[1][1] = i+1;
                 break;
@@ -114,6 +117,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         {
             if((casillas[i][poscolumna]->getidd() == idenemigo) && (casillas[i-1][poscolumna]->getidd() == idpropio))
             {
+                if (mode) return true;
                 pos[2][0] = i-1;
                 pos[2][1] = poscolumna;
                 break;
@@ -130,6 +134,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         {
             if((casillas[i][poscolumna]->getidd() == idenemigo) && (casillas[i+1][poscolumna]->getidd() == idpropio))
             {
+                if (mode) return true;
                 pos[3][0] = i+1;
                 pos[3][1] = poscolumna;
                 break;
@@ -148,6 +153,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         {
             if((casillas[posfila-i][poscolumna-i]->getidd() == idenemigo) && (casillas[posfila-i-1][poscolumna-i-1]->getidd() == idpropio))
             {
+                if (mode) return true;
                 pos[4][0] = posfila-i-1;
                 pos[4][1] = poscolumna-i-1;
                 break;
@@ -166,6 +172,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         {
             if((casillas[posfila+i][poscolumna-i]->getidd() == idenemigo) && (casillas[posfila+i+1][poscolumna-i-1]->getidd() == idpropio))
             {
+                if (mode) return true;
                 pos[5][0] = posfila+i+1;
                 pos[5][1] = poscolumna-i-1;
                 break;
@@ -185,6 +192,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         {
             if((casillas[posfila-i][poscolumna+i]->getidd() == idenemigo) && (casillas[posfila-i-1][poscolumna+i+1]->getidd() == idpropio))
             {
+                if (mode) return true;
                 pos[6][0] = posfila-i-1;
                 pos[6][1] = poscolumna+i+1;
                 break;
@@ -203,6 +211,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         {
             if((casillas[posfila+i][poscolumna+i]->getidd() == idenemigo) && (casillas[posfila+i+1][poscolumna+i+1]->getidd() == idpropio))
             {
+                if (mode) return true;
                 pos[7][0] = posfila+i+1;
                 pos[7][1] = poscolumna+i+1;
                 break;
@@ -213,7 +222,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         }
         i++;
     }
-
+    if (mode) return false;
     // fila
     for (int i = pos[0][1]+1; i <= poscolumna; i++)
     {
@@ -266,7 +275,7 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
         delete casillas[posfila+1][poscolumna+i];
         casillas[posfila+1][poscolumna+i] = new ficha(idpropio);
     }
-
+    return true;
 //    for (int i = 0; i < 8; i++){
 //        for (int j = 0; j < 2; j++)
 //        {
@@ -277,3 +286,36 @@ bool tablero::movimientovalido(short posfila, short poscolumna, unsigned short n
 //    cout << endl;
 }
 
+bool tablero::casillasjugables(unsigned short jugador)
+{
+    bool jugable = false;
+    for (int i = 0; i < filas; i++)
+    {
+        for(int j = 0; j < filas; j++)
+        {
+            if (casillas[i][j]->getidd() == ' ')
+            {
+                if (volteacasillas(i,j,jugador,true))
+                {
+                    casillas[i][j]->setidd('O');
+                    jugable = true;
+                }
+            }
+        }
+    }
+    return jugable;
+}
+
+void tablero::limpiarcasillas()
+{
+    for (int i = 0; i < filas; i++)
+    {
+        for(int j = 0; j < filas; j++)
+        {
+            if (casillas[i][j]->getidd() == 'O')
+            {
+                casillas[i][j]->setidd(' ');
+            }
+        }
+    }
+}

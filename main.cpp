@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
                 cin >> fil;
                 cout << "ingrese la columna:";
                 cin >> col;
-                tablero1.movimientovalido(fil-'0',col-'A',jugador);
+                tablero1.volteacasillas(fil-'0',col-'A',jugador);
                 if (jugador == 1) jugador = 2;
                 else jugador = 1;
             }

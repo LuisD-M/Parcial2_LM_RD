@@ -22,7 +22,9 @@ public:
     ~tablero();                            //destructor
     void initablero();                   //iniciar el tablero con los jugadores
     void impritablero() const;             //imprimir tablero
-    bool movimientovalido(short posfila, short poscolumna, unsigned short numerojugador);
+    bool volteacasillas(short posfila, short poscolumna, unsigned short numerojugador, bool mode = false);
+    bool casillasjugables(unsigned short jugador);
+    void limpiarcasillas();
 };
 
 #endif // TABLERO_H
