@@ -113,6 +113,7 @@ int main(int argc, char *argv[]){
         case 1:
         {
             string nombre1, nombre2;
+            bool jugable[2] = {true,true};
             cout<<"Ingrese el nombre del jugador 1:"; cin>>nombre1;
             cout<<"Ingrese el nombre del jugador 2:"; cin>>nombre2;
             jugador jugador1(nombre1, '*');
@@ -124,7 +125,13 @@ int main(int argc, char *argv[]){
             while(true)
             {
                 char fil,col;
-                if (!tablero1.casillasjugables(jugador)) break;
+                if (!tablero1.casillasjugables(jugador))
+                {
+                    cout << "!!!" << jugadores[jugador-1].getnombre() << " no tiene movimientos, se pasa al turno del rival!!!"<<endl;
+                    jugable[jugador-1] = false;
+                    if (!jugable[0] && !jugable[1]) break;
+                    continue;
+                }
                 tablero1.impritablero();
                 cout << "jugador " << jugadores[jugador-1].getnombre() << '(' << jugadores[jugador-1].getidd() << ')' <<endl;
                 cout << "ingrese la fila:";
@@ -139,6 +146,7 @@ int main(int argc, char *argv[]){
                 }
                 tablero1.limpiarcasillas();
                 tablero1.volteacasillas(fil-'0',col-'A',jugador);
+                for (int i = 0; i < 2; i++) jugable[i] = true;
                 if (jugador == 1) jugador = 2;
                 else jugador = 1;
             }
