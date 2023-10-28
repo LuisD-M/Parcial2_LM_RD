@@ -17,7 +17,6 @@ private:
     jugador jugador2;
 
 public:
-    tablero();                             //constructor
     tablero(const jugador &jugador1, const jugador &jugador2);
     ~tablero();                            //destructor
     void initablero();                   //iniciar el tablero con los jugadores
@@ -25,6 +24,7 @@ public:
     bool volteacasillas(short posfila, short poscolumna, unsigned short numerojugador, bool mode = false);
     bool casillasjugables(unsigned short jugador);
     void limpiarcasillas();
+    void EscArchivo();
 };
 
 #endif // TABLERO_H
