@@ -14,6 +14,7 @@ using namespace std;
 int menu();
 void leerHistorial();
 int str2intN(string a);
+int str2intC(string a);
 
 
 int main(int argc, char *argv[]){
@@ -149,8 +150,16 @@ int main(int argc, char *argv[]){
                     fil = str2intN(f);
                 }
 
+                cout << "ingrese la columna:"; cin >> c;
+                col = str2intC(c);
+                while (col<65 || col>(65+columnas-1)){
+                    cout<<"Columna invalida"<<endl;
+                    cout << "ingrese la Columna:"; cin >> c;
+                    col = str2intC(c);
+                }
 
-                if (!tablero1.casillavalida(fil-48,col-65))
+
+                if (!tablero1.casillavalida(fil,col-65))
                 {
                     cout << "!!!casilla invalida!!!" << endl;
                     tablero1.limpiarcasillas();
@@ -158,7 +167,7 @@ int main(int argc, char *argv[]){
                 }
 
                 tablero1.limpiarcasillas();
-                tablero1.volteacasillas(fil-48,col-65,jugador);
+                tablero1.volteacasillas(fil,col-65,jugador);
 
                 for (int i = 0; i < 2; i++) jugable[i] = true;
                 if (jugador == 1) jugador = 2;
@@ -232,15 +241,29 @@ void leerHistorial(){
 }
 
 int str2intN(string a){
-    int b,l,c=0;
+    int l,c=0;
     l=a.length();
-    for(int i=0; i<l; i++){
-        b = a[i] - 48;
-        c+=b;
-    }
+
+    if(l<0 || l>(1))
+        c=1000;
+    else
+        c=a[0]-48;
+
     return c;
 }
 
+int str2intC(string a){
+    int l,c=0;
+    l=a.length();
 
+    if(l<0 || l>(1))
+        c=1000;
+    else
+        c=(int)a[0];
+
+    cout<<c<<endl;
+
+    return c;
+}
 
 
