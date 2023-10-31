@@ -13,6 +13,7 @@ using namespace std;
 
 int menu();
 void leerHistorial();
+int str2intN(string a);
 
 
 int main(int argc, char *argv[]){
@@ -126,7 +127,9 @@ int main(int argc, char *argv[]){
             unsigned int jugador = 1;
             while(true)
             {
-                char fil,col;
+                int fil,col;                                                  //aqui
+                string f, c;
+
                 if (!tablero1.casillasjugables(jugador))
                 {
                     cout << "!!!" << jugadores[jugador-1].getnombre() << " no tiene movimientos, se pasa al turno del rival!!!"<<endl;
@@ -134,25 +137,34 @@ int main(int argc, char *argv[]){
                     if (!jugable[0] && !jugable[1]) break;
                     continue;
                 }
+
                 tablero1.impritablero();
-                cout << "jugador " << jugadores[jugador-1].getnombre() << '(' << jugadores[jugador-1].getidd() << ')' <<endl;
-                cout << "ingrese la fila:";
-                cin >> fil;
-                cout << "ingrese la columna:";
-                cin >> col;
-                if (!tablero1.casillavalida(fil-'0',col-'A'))
+                cout <<endl<< "jugador " << jugadores[jugador-1].getnombre() << '(' << jugadores[jugador-1].getidd() << ')' <<endl;
+
+                cout << "ingrese la fila:"; cin >> f;
+                fil = str2intN(f);
+                while (fil<0 || fil>(filas-1)){
+                    cout<<"Fila invalida"<<endl;
+                    cout << "ingrese la fila:"; cin >> f;
+                    fil = str2intN(f);
+                }
+
+
+                if (!tablero1.casillavalida(fil-48,col-65))
                 {
                     cout << "!!!casilla invalida!!!" << endl;
                     tablero1.limpiarcasillas();
                     continue;
                 }
+
                 tablero1.limpiarcasillas();
-                tablero1.volteacasillas(fil-'0',col-'A',jugador);
+                tablero1.volteacasillas(fil-48,col-65,jugador);
+
                 for (int i = 0; i < 2; i++) jugable[i] = true;
                 if (jugador == 1) jugador = 2;
                 else jugador = 1;
             }
-          tablero1.EscArchivo();
+            tablero1.EscArchivo();
         }
         case 2:
         {
@@ -174,12 +186,14 @@ int main(int argc, char *argv[]){
 
 int menu(){
     unsigned short int x=5;
+    string a="";
     cout<<"---------- Menu de juego ----------"<<endl;
     cout<<"1. Iniciar nueva partida."<<endl;
     cout<<"2. Ver historial de partidas."<<endl;
     cout<<"0. Finalizar."<<endl;
 
-    cout<<"Ingrese la opcion deseada: "; cin>>x;
+    cout<<"Ingrese la opcion deseada: "; cin>>a;
+    x = str2intN(a);
 
     return x;
 }
@@ -216,3 +230,17 @@ void leerHistorial(){
             cout<<"Erros inesperado"<<endl;
     }
 }
+
+int str2intN(string a){
+    int b,l,c=0;
+    l=a.length();
+    for(int i=0; i<l; i++){
+        b = a[i] - 48;
+        c+=b;
+    }
+    return c;
+}
+
+
+
+

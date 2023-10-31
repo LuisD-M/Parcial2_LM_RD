@@ -25,7 +25,7 @@ public:
     bool casillasjugables(unsigned short jugador);
     void limpiarcasillas();
     void EscArchivo();
-    bool casillavalida(unsigned short posfila, unsigned short poscolumna);
+    bool casillavalida(int posfila, int poscolumna);
     void setCasillas(ficha* casillas[filas][columnas]);
     void getCasillas(ficha* casillas[filas][columnas]);
 };

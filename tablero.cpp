@@ -367,7 +367,7 @@ void tablero::EscArchivo()
     }
 }
 
-bool tablero::casillavalida(unsigned short posfila, unsigned short poscolumna)
+bool tablero::casillavalida( int posfila, int poscolumna)
 {
     return casillas[posfila][poscolumna]->getidd() == 'O';
 }
@@ -408,3 +408,4 @@ string int2str(unsigned short int a){
     }
     return b;
 }
+
