@@ -137,7 +137,8 @@ int main(int argc, char *argv[]){
                 {
                     cout << "!!!" << jugadores[jugador-1].getnombre() << " no tiene movimientos, se pasa al turno del rival!!!"<<endl;
                     jugable[jugador-1] = false;
-                    if (!jugable[0] && !jugable[1]) break;
+
+                    if (!jugable[0] && !jugable[1])cond=false;
 
                     contador = tablero1.totalfichas();
                     if(contador == filas*columnas){
@@ -182,6 +183,15 @@ int main(int argc, char *argv[]){
                 else jugador = 1;
             }
             tablero1.EscArchivo();
+
+
+
+
+
+
+
+
+
         }
         case 2:
         {

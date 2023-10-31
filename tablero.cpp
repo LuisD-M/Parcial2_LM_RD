@@ -347,7 +347,6 @@ void tablero::EscArchivo()
 
     lineaTexto = jugador1.getnombre() + "," + co1 + "," + jugador2.getnombre() + "," + co2 + "," + fechaYHora;
 
-
     try{
 
         ofstream in("HistorialPartidas.txt",ios::app);
@@ -357,10 +356,10 @@ void tablero::EscArchivo()
             in.close();
         }
         else
-            throw '2';
+            throw '5';
     }
     catch (char c){
-        if(c==2)
+        if(c==5)
             cout<<"Error con el archivo de escritura"<<endl<<endl;
         else
             cout<<"Error inesperado"<<endl<<endl;
@@ -407,8 +406,22 @@ int tablero::totalfichas()
     return cont;
 }
 
+void tablero::win()
+{
+    unsigned short int c1=0, c2=0;
+    for(unsigned short int i=0; i<filas; i++){
+        for(unsigned short int j=0; j<columnas; j++){
+            if(casillas[i][j]->getidd() == jugador1.getidd())
+                c1++;
+
+            else if(casillas[i][j]->getidd() == jugador2.getidd())
+                c2++;
+        }
+    }
 
 
+
+}
 
 string int2str(unsigned short int a){
     int c=0,i=1;

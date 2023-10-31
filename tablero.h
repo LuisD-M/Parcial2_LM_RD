@@ -29,6 +29,7 @@ public:
     void setCasillas(ficha* casillas[filas][columnas]);
     void getCasillas(ficha* casillas[filas][columnas]);
     int totalfichas();
+    void win();
 
 };
 
