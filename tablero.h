@@ -28,6 +28,8 @@ public:
     bool casillavalida(int posfila, int poscolumna);
     void setCasillas(ficha* casillas[filas][columnas]);
     void getCasillas(ficha* casillas[filas][columnas]);
+    int totalfichas();
+
 };
 
 #endif // TABLERO_H

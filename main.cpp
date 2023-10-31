@@ -126,9 +126,11 @@ int main(int argc, char *argv[]){
             tablero tablero1(jugador1,jugador2);
             tablero1.initablero();
             unsigned int jugador = 1;
-            while(true)
+            bool cond=true;
+
+            while(cond)
             {
-                int fil,col;                                                  //aqui
+                int fil,col, contador=0;
                 string f, c;
 
                 if (!tablero1.casillasjugables(jugador))
@@ -136,6 +138,13 @@ int main(int argc, char *argv[]){
                     cout << "!!!" << jugadores[jugador-1].getnombre() << " no tiene movimientos, se pasa al turno del rival!!!"<<endl;
                     jugable[jugador-1] = false;
                     if (!jugable[0] && !jugable[1]) break;
+
+                    contador = tablero1.totalfichas();
+                    if(contador == filas*columnas){
+                        cout<<endl<<"Tablero lleno, partida finalizada"<<endl;
+                        cond=false;
+                    }
+
                     continue;
                 }
 
@@ -152,22 +161,21 @@ int main(int argc, char *argv[]){
 
                 cout << "ingrese la columna:"; cin >> c;
                 col = str2intC(c);
-                while (col<65 || col>(65+columnas-1)){
+                while (col<0 || col>(columnas-1)){
                     cout<<"Columna invalida"<<endl;
                     cout << "ingrese la Columna:"; cin >> c;
                     col = str2intC(c);
                 }
 
-
-                if (!tablero1.casillavalida(fil,col-65))
+                if (!tablero1.casillavalida(fil,col))
                 {
-                    cout << "!!!casilla invalida!!!" << endl;
+                    cout <<"["<<fil<<"]-"<<"["<<char(col+65)<<"] es "<< "!!!casilla invalida!!!" << endl;
                     tablero1.limpiarcasillas();
                     continue;
                 }
 
                 tablero1.limpiarcasillas();
-                tablero1.volteacasillas(fil,col-65,jugador);
+                tablero1.volteacasillas(fil,col,jugador);
 
                 for (int i = 0; i < 2; i++) jugable[i] = true;
                 if (jugador == 1) jugador = 2;
@@ -257,11 +265,9 @@ int str2intC(string a){
     l=a.length();
 
     if(l<0 || l>(1))
-        c=1000;
+        c=1;
     else
-        c=(int)a[0];
-
-    cout<<c<<endl;
+        c=(int)a[0]-65;
 
     return c;
 }

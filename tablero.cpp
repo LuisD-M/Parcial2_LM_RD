@@ -292,7 +292,7 @@ bool tablero::casillasjugables(unsigned short jugador)
     bool jugable = false;
     for (int i = 0; i < filas; i++)
     {
-        for(int j = 0; j < filas; j++)
+        for(int j = 0; j < columnas; j++)
         {
             if (casillas[i][j]->getidd() == ' ')
             {
@@ -311,7 +311,7 @@ void tablero::limpiarcasillas()
 {
     for (int i = 0; i < filas; i++)
     {
-        for(int j = 0; j < filas; j++)
+        for(int j = 0; j < columnas; j++)
         {
             if (casillas[i][j]->getidd() == 'O')
             {
@@ -376,7 +376,7 @@ void tablero::setCasillas(ficha* casillas[filas][columnas])
 {
     for (int i = 0; i < filas; i++)
     {
-        for(int j = 0; j < filas; j++)
+        for(int j = 0; j < columnas; j++)
         {
             this->casillas[i][j] = casillas[i][j];
         }
@@ -387,12 +387,28 @@ void tablero::getCasillas(ficha* casillas[filas][columnas])
 {
     for (int i = 0; i < filas; i++)
     {
-        for(int j = 0; j < filas; j++)
+        for(int j = 0; j < columnas; j++)
         {
             casillas[i][j] = this->casillas[i][j];
         }
     }
 }
+
+int tablero::totalfichas()
+{
+    unsigned short int cont=0;
+    for(unsigned short int i=0; i<filas; i++){
+        for(unsigned short int j=0; j<columnas; j++){
+            if(casillas[i][j]->getidd() != ' ')
+                cont++;
+        }
+    }
+
+    return cont;
+}
+
+
+
 
 string int2str(unsigned short int a){
     int c=0,i=1;
