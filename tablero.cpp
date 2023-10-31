@@ -45,7 +45,7 @@ void tablero::initablero()
 
 void tablero::impritablero() const
 {
-    cout<<"Tablero de juego."<<endl<<endl<<"   ";
+    cout<<endl<<"Tablero de juego."<<endl<<endl<<"   ";
     for(unsigned short int i=0; i<filas;i++) cout<<" "<<char(i+65)<<"  ";
 
     cout<<endl<<"   _______________________________"<<endl;
@@ -320,6 +320,7 @@ void tablero::limpiarcasillas()
         }
     }
 }
+
 void tablero::EscArchivo()
 {
     int cont1=0, cont2=0;
@@ -346,14 +347,24 @@ void tablero::EscArchivo()
 
     lineaTexto = jugador1.getnombre() + "," + co1 + "," + jugador2.getnombre() + "," + co2 + "," + fechaYHora;
 
-    ofstream in("HistorialPartidas.txt",ios::app);
 
-    if (in.is_open()){
-        in<<lineaTexto<<endl;
-        in.close();
+    try{
+
+        ofstream in("HistorialPartidas.txt",ios::app);
+
+        if (in.is_open()){
+            in<<lineaTexto<<endl;
+            in.close();
+        }
+        else
+            throw '2';
     }
-    else
-        cout<<"El archivo de hitorial no ce pudo abrir."<<endl;
+    catch (char c){
+        if(c==2)
+            cout<<"Error con el archivo de escritura"<<endl<<endl;
+        else
+            cout<<"Error inesperado"<<endl<<endl;
+    }
 }
 
 bool tablero::casillavalida(unsigned short posfila, unsigned short poscolumna)

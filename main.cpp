@@ -101,7 +101,7 @@ int main(int argc, char *argv[]){
 //    tablero1.casillasjugables(2);
 //    tablero1.impritablero();
 
-    bool run;
+    bool run = true;
     unsigned short opcion;
 
     do{
@@ -109,7 +109,9 @@ int main(int argc, char *argv[]){
         switch (opcion) {
         case 0:
             run = false;
+            cout<<endl<<"Partida finalizada."<<endl<<endl;
             break;
+
         case 1:
         {
             string nombre1, nombre2;
@@ -161,12 +163,10 @@ int main(int argc, char *argv[]){
         }
         default:
         {
-            cout << "opcion invalida" << endl;
+            cout <<endl<< "opcion invalida" << endl<<endl;
             break;
         }
         }
-
-        cout<<"Partida finalizada."<<endl<<endl;
     }while(run);
 
     return a.exec();
@@ -179,9 +179,7 @@ int menu(){
     cout<<"2. Ver historial de partidas."<<endl;
     cout<<"0. Finalizar."<<endl;
 
-
     cout<<"Ingrese la opcion deseada: "; cin>>x;
-
 
     return x;
 }
@@ -189,20 +187,32 @@ int menu(){
 void leerHistorial(){
     string nom1,pun1,nom2,pun2,fecha,linea;
 
-    ifstream archivo("HistorialPartidas.txt");
+    try{
 
-    while (getline(archivo, linea)) {
-        stringstream ss(linea);
-        string valor;
+        ifstream archivo("HistorialPartidas.txt");
 
-        if (getline(ss, valor, ',')) nom1 = (valor);
-        if (getline(ss, valor, ',')) pun1 = (valor);
-        if (getline(ss, valor, ',')) nom2 = (valor);
-        if (getline(ss, valor, ',')) pun2 = (valor);
-        if (getline(ss, valor, ',')) fecha = (valor);
+        if(archivo.is_open()){
 
-        cout<<nom1<<":"<<pun1<<" VS "<<nom2<<":"<<pun2<<"  Fecha: "<<fecha<<endl;
+            while (getline(archivo, linea)) {
+                stringstream ss(linea);
+                string valor;
+
+                if (getline(ss, valor, ',')) nom1 = (valor);
+                if (getline(ss, valor, ',')) pun1 = (valor);
+                if (getline(ss, valor, ',')) nom2 = (valor);
+                if (getline(ss, valor, ',')) pun2 = (valor);
+                if (getline(ss, valor, ',')) fecha = (valor);
+
+                cout<<nom1<<":"<<pun1<<" VS "<<nom2<<":"<<pun2<<"  Fecha: "<<fecha<<endl;
+            }
+            archivo.close();
+        }
+        else throw '1';
     }
-    archivo.close();
-
+    catch (char c){
+        if(c=='1')
+            cout<<"Error con el archivo de lectura"<<endl<<endl;
+        else
+            cout<<"Erros inesperado"<<endl;
+    }
 }
