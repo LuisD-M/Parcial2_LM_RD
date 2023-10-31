@@ -142,7 +142,7 @@ int main(int argc, char *argv[]){
 
                     contador = tablero1.totalfichas();
                     if(contador == filas*columnas){
-                        cout<<endl<<"Tablero lleno, partida finalizada"<<endl;
+                        cout<<endl<<"Tablero lleno"<<endl;
                         cond=false;
                     }
 
@@ -178,19 +178,15 @@ int main(int argc, char *argv[]){
                 tablero1.limpiarcasillas();
                 tablero1.volteacasillas(fil,col,jugador);
 
-                for (int i = 0; i < 2; i++) jugable[i] = true;
+                //for (int i = 0; i < 2; i++) jugable[i] = true;
                 if (jugador == 1) jugador = 2;
                 else jugador = 1;
             }
+
+            tablero1.impritablero();
+            tablero1.win();
             tablero1.EscArchivo();
-
-
-
-
-
-
-
-
+            break;
 
         }
         case 2:

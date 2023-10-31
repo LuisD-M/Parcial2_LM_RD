@@ -419,6 +419,16 @@ void tablero::win()
         }
     }
 
+    cout<<"Puntaje de "<<jugador1.getnombre()<<": "<<c1<<endl;
+    cout<<"Puntaje de "<<jugador2.getnombre()<<": "<<c2<<endl;
+
+    if(c1>c2) cout<<"El ganador es: "<<jugador1.getnombre()<<endl;
+
+    else if(c2>c1) cout<<"El ganador es: "<<jugador2.getnombre()<<endl;
+
+    else cout<<"La partida quedo empatada."<<endl;
+
+    cout<<"Partida finalizada."<<endl<<endl;;
 
 
 }
