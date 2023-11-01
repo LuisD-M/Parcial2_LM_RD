@@ -45,7 +45,7 @@ void tablero::initablero()
 
 void tablero::impritablero() const
 {
-    cout<<"Tablero de juego."<<endl<<endl<<"   ";
+    cout<<endl<<"Tablero de juego."<<endl<<endl<<"   ";
     for(unsigned short int i=0; i<filas;i++) cout<<" "<<char(i+65)<<"  ";
 
     cout<<endl<<"   _______________________________"<<endl;
@@ -292,7 +292,7 @@ bool tablero::casillasjugables(unsigned short jugador)
     bool jugable = false;
     for (int i = 0; i < filas; i++)
     {
-        for(int j = 0; j < filas; j++)
+        for(int j = 0; j < columnas; j++)
         {
             if (casillas[i][j]->getidd() == ' ')
             {
@@ -311,7 +311,7 @@ void tablero::limpiarcasillas()
 {
     for (int i = 0; i < filas; i++)
     {
-        for(int j = 0; j < filas; j++)
+        for(int j = 0; j < columnas; j++)
         {
             if (casillas[i][j]->getidd() == 'O')
             {
@@ -320,6 +320,7 @@ void tablero::limpiarcasillas()
         }
     }
 }
+
 void tablero::EscArchivo()
 {
     int cont1=0, cont2=0;
@@ -346,17 +347,26 @@ void tablero::EscArchivo()
 
     lineaTexto = jugador1.getnombre() + "," + co1 + "," + jugador2.getnombre() + "," + co2 + "," + fechaYHora;
 
-    ofstream in("HistorialPartidas.txt",ios::app);
+    try{
 
-    if (in.is_open()){
-        in<<lineaTexto<<endl;
-        in.close();
+        ofstream in("HistorialPartidas.txt",ios::app);
+
+        if (in.is_open()){
+            in<<lineaTexto<<endl;
+            in.close();
+        }
+        else
+            throw '5';
     }
-    else
-        cout<<"El archivo de hitorial no ce pudo abrir."<<endl;
+    catch (char c){
+        if(c==5)
+            cout<<"Error con el archivo de escritura"<<endl<<endl;
+        else
+            cout<<"Error inesperado"<<endl<<endl;
+    }
 }
 
-bool tablero::casillavalida(unsigned short posfila, unsigned short poscolumna)
+bool tablero::casillavalida( int posfila, int poscolumna)
 {
     return casillas[posfila][poscolumna]->getidd() == 'O';
 }
@@ -365,7 +375,7 @@ void tablero::setCasillas(ficha* casillas[filas][columnas])
 {
     for (int i = 0; i < filas; i++)
     {
-        for(int j = 0; j < filas; j++)
+        for(int j = 0; j < columnas; j++)
         {
             this->casillas[i][j] = casillas[i][j];
         }
@@ -376,11 +386,51 @@ void tablero::getCasillas(ficha* casillas[filas][columnas])
 {
     for (int i = 0; i < filas; i++)
     {
-        for(int j = 0; j < filas; j++)
+        for(int j = 0; j < columnas; j++)
         {
             casillas[i][j] = this->casillas[i][j];
         }
     }
+}
+
+int tablero::totalfichas()
+{
+    unsigned short int cont=0;
+    for(unsigned short int i=0; i<filas; i++){
+        for(unsigned short int j=0; j<columnas; j++){
+            if(casillas[i][j]->getidd() != ' ')
+                cont++;
+        }
+    }
+
+    return cont;
+}
+
+void tablero::win()
+{
+    unsigned short int c1=0, c2=0;
+    for(unsigned short int i=0; i<filas; i++){
+        for(unsigned short int j=0; j<columnas; j++){
+            if(casillas[i][j]->getidd() == jugador1.getidd())
+                c1++;
+
+            else if(casillas[i][j]->getidd() == jugador2.getidd())
+                c2++;
+        }
+    }
+
+    cout<<"Puntaje de "<<jugador1.getnombre()<<": "<<c1<<endl;
+    cout<<"Puntaje de "<<jugador2.getnombre()<<": "<<c2<<endl;
+
+    if(c1>c2) cout<<"El ganador es: "<<jugador1.getnombre()<<endl;
+
+    else if(c2>c1) cout<<"El ganador es: "<<jugador2.getnombre()<<endl;
+
+    else cout<<"La partida quedo empatada."<<endl;
+
+    cout<<"Partida finalizada."<<endl<<endl;;
+
+
 }
 
 string int2str(unsigned short int a){
@@ -397,3 +447,4 @@ string int2str(unsigned short int a){
     }
     return b;
 }
+

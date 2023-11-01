@@ -13,6 +13,8 @@ using namespace std;
 
 int menu();
 void leerHistorial();
+int str2intN(string a);
+int str2intC(string a);
 
 
 int main(int argc, char *argv[]){
@@ -101,7 +103,7 @@ int main(int argc, char *argv[]){
 //    tablero1.casillasjugables(2);
 //    tablero1.impritablero();
 
-    bool run;
+    bool run = true;
     unsigned short opcion;
 
     do{
@@ -109,7 +111,9 @@ int main(int argc, char *argv[]){
         switch (opcion) {
         case 0:
             run = false;
+            cout<<endl<<"Partida finalizada."<<endl<<endl;
             break;
+
         case 1:
         {
             string nombre1, nombre2;
@@ -122,35 +126,68 @@ int main(int argc, char *argv[]){
             tablero tablero1(jugador1,jugador2);
             tablero1.initablero();
             unsigned int jugador = 1;
-            while(true)
+            bool cond=true;
+
+            while(cond)
             {
-                char fil,col;
+                int fil,col, contador=0;
+                string f, c;
+
                 if (!tablero1.casillasjugables(jugador))
                 {
                     cout << "!!!" << jugadores[jugador-1].getnombre() << " no tiene movimientos, se pasa al turno del rival!!!"<<endl;
                     jugable[jugador-1] = false;
-                    if (!jugable[0] && !jugable[1]) break;
+
+                    if (!jugable[0] && !jugable[1])cond=false;
+
+                    contador = tablero1.totalfichas();
+                    if(contador == filas*columnas){
+                        cout<<endl<<"Tablero lleno"<<endl;
+                        cond=false;
+                    }
+
                     continue;
                 }
+
                 tablero1.impritablero();
-                cout << "jugador " << jugadores[jugador-1].getnombre() << '(' << jugadores[jugador-1].getidd() << ')' <<endl;
-                cout << "ingrese la fila:";
-                cin >> fil;
-                cout << "ingrese la columna:";
-                cin >> col;
-                if (!tablero1.casillavalida(fil-'0',col-'A'))
+                cout <<endl<< "jugador " << jugadores[jugador-1].getnombre() << '(' << jugadores[jugador-1].getidd() << ')' <<endl;
+
+                cout << "ingrese la fila:"; cin >> f;
+                fil = str2intN(f);
+                while (fil<0 || fil>(filas-1)){
+                    cout<<"Fila invalida"<<endl;
+                    cout << "ingrese la fila:"; cin >> f;
+                    fil = str2intN(f);
+                }
+
+                cout << "ingrese la columna:"; cin >> c;
+                col = str2intC(c);
+                while (col<0 || col>(columnas-1)){
+                    cout<<"Columna invalida"<<endl;
+                    cout << "ingrese la Columna:"; cin >> c;
+                    col = str2intC(c);
+                }
+
+                if (!tablero1.casillavalida(fil,col))
                 {
-                    cout << "!!!casilla invalida!!!" << endl;
+                    cout <<"["<<fil<<"]-"<<"["<<char(col+65)<<"] es "<< "!!!casilla invalida!!!" << endl;
                     tablero1.limpiarcasillas();
                     continue;
                 }
+
                 tablero1.limpiarcasillas();
-                tablero1.volteacasillas(fil-'0',col-'A',jugador);
-                for (int i = 0; i < 2; i++) jugable[i] = true;
+                tablero1.volteacasillas(fil,col,jugador);
+
+                //for (int i = 0; i < 2; i++) jugable[i] = true;
                 if (jugador == 1) jugador = 2;
                 else jugador = 1;
             }
-          tablero1.EscArchivo();
+
+            tablero1.impritablero();
+            tablero1.win();
+            tablero1.EscArchivo();
+            break;
+
         }
         case 2:
         {
@@ -161,12 +198,10 @@ int main(int argc, char *argv[]){
         }
         default:
         {
-            cout << "opcion invalida" << endl;
+            cout <<endl<< "opcion invalida" << endl<<endl;
             break;
         }
         }
-
-        cout<<"Partida finalizada."<<endl<<endl;
     }while(run);
 
     return a.exec();
@@ -174,14 +209,14 @@ int main(int argc, char *argv[]){
 
 int menu(){
     unsigned short int x=5;
+    string a="";
     cout<<"---------- Menu de juego ----------"<<endl;
     cout<<"1. Iniciar nueva partida."<<endl;
     cout<<"2. Ver historial de partidas."<<endl;
     cout<<"0. Finalizar."<<endl;
 
-
-    cout<<"Ingrese la opcion deseada: "; cin>>x;
-
+    cout<<"Ingrese la opcion deseada: "; cin>>a;
+    x = str2intN(a);
 
     return x;
 }
@@ -189,20 +224,58 @@ int menu(){
 void leerHistorial(){
     string nom1,pun1,nom2,pun2,fecha,linea;
 
-    ifstream archivo("HistorialPartidas.txt");
+    try{
 
-    while (getline(archivo, linea)) {
-        stringstream ss(linea);
-        string valor;
+        ifstream archivo("HistorialPartidas.txt");
 
-        if (getline(ss, valor, ',')) nom1 = (valor);
-        if (getline(ss, valor, ',')) pun1 = (valor);
-        if (getline(ss, valor, ',')) nom2 = (valor);
-        if (getline(ss, valor, ',')) pun2 = (valor);
-        if (getline(ss, valor, ',')) fecha = (valor);
+        if(archivo.is_open()){
 
-        cout<<nom1<<":"<<pun1<<" VS "<<nom2<<":"<<pun2<<"  Fecha: "<<fecha<<endl;
+            while (getline(archivo, linea)) {
+                stringstream ss(linea);
+                string valor;
+
+                if (getline(ss, valor, ',')) nom1 = (valor);
+                if (getline(ss, valor, ',')) pun1 = (valor);
+                if (getline(ss, valor, ',')) nom2 = (valor);
+                if (getline(ss, valor, ',')) pun2 = (valor);
+                if (getline(ss, valor, ',')) fecha = (valor);
+
+                cout<<nom1<<":"<<pun1<<" VS "<<nom2<<":"<<pun2<<"  Fecha: "<<fecha<<endl;
+            }
+            archivo.close();
+        }
+        else throw '1';
     }
-    archivo.close();
-
+    catch (char c){
+        if(c=='1')
+            cout<<"Error con el archivo de lectura"<<endl<<endl;
+        else
+            cout<<"Erros inesperado"<<endl;
+    }
 }
+
+int str2intN(string a){
+    int l,c=0;
+    l=a.length();
+
+    if(l<0 || l>(1))
+        c=1000;
+    else
+        c=a[0]-48;
+
+    return c;
+}
+
+int str2intC(string a){
+    int l,c=0;
+    l=a.length();
+
+    if(l<0 || l>(1))
+        c=1;
+    else
+        c=(int)a[0]-65;
+
+    return c;
+}
+
+
