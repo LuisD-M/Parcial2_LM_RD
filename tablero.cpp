@@ -62,8 +62,8 @@ void tablero::impritablero() const
 
 bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short numerojugador, bool mode)
 {
-    unsigned short pos[filas][2];
-    for (int i = 0; i < filas; i++) for (int j = 0; j < 2; j++) pos[i][j] = 9;
+    unsigned short pos[8][2];
+    for (int i = 0; i < 8; i++) for (int j = 0; j < 2; j++) pos[i][j] = filas*columnas;
     char idenemigo;
     char idpropio;
     if (numerojugador == 1)
@@ -167,7 +167,7 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
     }
     // encierro de diagonal izquierda abajo
     i = 1;
-    while(-1 - i + poscolumna >= 0 && 1 + i + posfila <= 7)
+    while(-1 - i + poscolumna >= 0 && 1 + i + posfila <= filas-1)
     {
         if ((casillas[posfila+i][poscolumna-i]->getidd() == idenemigo) && (casillas[posfila+i+1][poscolumna-i-1]->getidd() == idenemigo || casillas[posfila+i+1][poscolumna-i-1]->getidd() == idpropio))
         {
@@ -187,7 +187,7 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
 
     // encierro de diagonal derecha arriba
     i = 1;
-    while(1 + i + poscolumna <= 7 && -1 - i + posfila >= 0)
+    while(1 + i + poscolumna <= columnas-1 && -1 - i + posfila >= 0)
     {
         if ((casillas[posfila-i][poscolumna+i]->getidd() == idenemigo) && (casillas[posfila-i-1][poscolumna+i+1]->getidd() == idenemigo || casillas[posfila-i-1][poscolumna+i+1]->getidd() == idpropio))
         {
@@ -206,7 +206,7 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
     }
     // encierro de diagonal derecha abajo
     i = 1;
-    while(1 + i + poscolumna <= 7 && 1 + i + posfila <= 7)
+    while(1 + i + poscolumna <= columnas-1 && 1 + i + posfila <= filas-1)
     {
         if ((casillas[posfila+i][poscolumna+i]->getidd() == idenemigo) && (casillas[posfila+i+1][poscolumna+i+1]->getidd() == idenemigo || casillas[posfila+i+1][poscolumna+i+1]->getidd() == idpropio))
         {
@@ -227,64 +227,56 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
     // fila
     for (int i = pos[0][1]+1; i <= poscolumna; i++)
     {
-        if (pos[0][1] == 9) break;
+        if (pos[0][1] == filas*columnas) break;
         delete casillas[posfila][i];
         casillas[posfila][i] = new ficha(idpropio);
     }
     for (int i = poscolumna; i < pos[1][1]; i++)
     {
-        if (pos[1][1] == 9) break;
+        if (pos[1][1] == filas*columnas) break;
         delete casillas[posfila][i];
         casillas[posfila][i] = new ficha(idpropio);
     }
     // columna
     for (int i = pos[2][0]+1; i <= posfila; i++)
     {
-        if (pos[2][0] == 9) break;
+        if (pos[2][0] == filas*columnas) break;
         delete casillas[i][poscolumna];
         casillas[i][poscolumna] = new ficha(idpropio);
     }
     for (int i = posfila; i < pos[3][0]; i++)
     {
-        if (pos[3][0] == 9) break;
+        if (pos[3][0] == filas*columnas) break;
         delete casillas[i][poscolumna];
         casillas[i][poscolumna] = new ficha(idpropio);
     }
     // diagonal izquierda
     for (int i = 0; poscolumna-i > pos[4][1]; i++)
     {
-        if (pos[4][1] == 9) break;
+        if (pos[4][1] == filas*columnas) break;
         delete casillas[posfila-i][poscolumna-i];
         casillas[posfila-i][poscolumna-i] = new ficha(idpropio);
     }
     for (int i = 0; poscolumna-i > pos[5][1]; i++)
     {
-        if (pos[5][1] == 9) break;
+        if (pos[5][1] == filas*columnas) break;
         delete casillas[posfila+i][poscolumna-i];
         casillas[posfila+i][poscolumna-i] = new ficha(idpropio);
     }
     // diagonal derecha
     for (int i = 0; poscolumna+i < pos[6][1]; i++)
     {
-        if (pos[6][1] == 9) break;
+        if (pos[6][1] == filas*columnas) break;
         delete casillas[posfila-i][poscolumna+i];
         casillas[posfila-i][poscolumna+i] = new ficha(idpropio);
     }
     for (int i = 0; poscolumna+i < pos[7][1]; i++)
     {
-        if (pos[7][1] == 9) break;
+        if (pos[7][1] == filas*columnas) break;
         delete casillas[posfila+i][poscolumna+i];
         casillas[posfila+i][poscolumna+i] = new ficha(idpropio);
     }
     return true;
-//    for (int i = 0; i < 8; i++){
-//        for (int j = 0; j < 2; j++)
-//        {
-//            cout << pos[i][j] << ',';
-//        }
-//        cout << endl;
-//    }
-//    cout << endl;
 }
 
 bool tablero::casillasjugables(unsigned short jugador)
