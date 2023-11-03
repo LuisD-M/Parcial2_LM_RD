@@ -12,6 +12,7 @@ using namespace std;
 
 string int2str(unsigned short int a);
 
+// construye cada casilla del tablero y guarda los jugadores
 tablero::tablero(const jugador &jugador1, const jugador &jugador2)
 {
     for(unsigned short int i=0; i<filas; i++){
@@ -22,6 +23,7 @@ tablero::tablero(const jugador &jugador1, const jugador &jugador2)
     this->jugador2 = jugador2;
 }
 
+// destruye la memoria dinamica usada para las las fichas
 tablero::~tablero()
 {
     for(unsigned short int i=0; i<filas; i++){
@@ -30,6 +32,7 @@ tablero::~tablero()
     }
 }
 
+// inicializa el tablero con casillas vacias excepto las 4 casillas iniciales
 void tablero::initablero()
 {
     for(unsigned short int i=0; i<filas; i++){
@@ -43,6 +46,7 @@ void tablero::initablero()
     casillas[4][3]->setidd(jugador2.getidd());
 }
 
+// despliega en consola el tablero
 void tablero::impritablero() const
 {
     cout<<endl<<"Tablero de juego."<<endl<<endl<<"   ";
@@ -60,9 +64,11 @@ void tablero::impritablero() const
     }
 }
 
+// mode true: se encarga de verificar si existen encierros (un sandwich)
+// mode false: encuentra los lugares donde ocurre un encierro y voltea las fichas
 bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short numerojugador, bool mode)
 {
-    unsigned short pos[8][2];
+    unsigned short pos[8][2]; // matriz que guarda las posiciones de los encierros
     for (int i = 0; i < 8; i++) for (int j = 0; j < 2; j++) pos[i][j] = filas*columnas;
     char idenemigo;
     char idpropio;
@@ -75,7 +81,7 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
         idpropio = jugador2.getidd();
         idenemigo = jugador1.getidd();
     }
-
+    // verifica/obtiene las posiciones de los encierros
     // encierro de fila izquierda
     for (int i = poscolumna-1; i >= 1; i--)
     {
@@ -224,6 +230,7 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
         i++;
     }
     if (mode) return false;
+    // voltea las fichas donde hay encierros
     // fila
     for (int i = pos[0][1]+1; i <= poscolumna; i++)
     {
