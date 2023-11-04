@@ -231,52 +231,56 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
     }
     if (mode) return false;
     // voltea las fichas donde hay encierros
-    // fila
+    // fila izquierda
     for (int i = pos[0][1]+1; i <= poscolumna; i++)
     {
         if (pos[0][1] == filas*columnas) break;
         delete casillas[posfila][i];
         casillas[posfila][i] = new ficha(idpropio);
     }
+    // fila derecha
     for (int i = poscolumna; i < pos[1][1]; i++)
     {
         if (pos[1][1] == filas*columnas) break;
         delete casillas[posfila][i];
         casillas[posfila][i] = new ficha(idpropio);
     }
-    // columna
+    // columna arriba
     for (int i = pos[2][0]+1; i <= posfila; i++)
     {
         if (pos[2][0] == filas*columnas) break;
         delete casillas[i][poscolumna];
         casillas[i][poscolumna] = new ficha(idpropio);
     }
+    // columna abajo
     for (int i = posfila; i < pos[3][0]; i++)
     {
         if (pos[3][0] == filas*columnas) break;
         delete casillas[i][poscolumna];
         casillas[i][poscolumna] = new ficha(idpropio);
     }
-    // diagonal izquierda
+    // diagonal izquierda arriba
     for (int i = 0; poscolumna-i > pos[4][1]; i++)
     {
         if (pos[4][1] == filas*columnas) break;
         delete casillas[posfila-i][poscolumna-i];
         casillas[posfila-i][poscolumna-i] = new ficha(idpropio);
     }
+    // diagonal izquierda abajo
     for (int i = 0; poscolumna-i > pos[5][1]; i++)
     {
         if (pos[5][1] == filas*columnas) break;
         delete casillas[posfila+i][poscolumna-i];
         casillas[posfila+i][poscolumna-i] = new ficha(idpropio);
     }
-    // diagonal derecha
+    // diagonal derecha arriba
     for (int i = 0; poscolumna+i < pos[6][1]; i++)
     {
         if (pos[6][1] == filas*columnas) break;
         delete casillas[posfila-i][poscolumna+i];
         casillas[posfila-i][poscolumna+i] = new ficha(idpropio);
     }
+    // diagonal derecha abajo
     for (int i = 0; poscolumna+i < pos[7][1]; i++)
     {
         if (pos[7][1] == filas*columnas) break;
@@ -286,6 +290,7 @@ bool tablero::volteacasillas(short posfila, short poscolumna, unsigned short num
     return true;
 }
 
+// ingresa en la matriz las casillas jugables por el jugador de turno
 bool tablero::casillasjugables(unsigned short jugador)
 {
     bool jugable = false;
@@ -306,6 +311,7 @@ bool tablero::casillasjugables(unsigned short jugador)
     return jugable;
 }
 
+// eliminar las 'O' que fueron colocadas en las casillas jugables
 void tablero::limpiarcasillas()
 {
     for (int i = 0; i < filas; i++)
@@ -320,6 +326,7 @@ void tablero::limpiarcasillas()
     }
 }
 
+// guarda en el archivo la informacion de la partida
 void tablero::EscArchivo()
 {
     int cont1=0, cont2=0;
@@ -365,11 +372,13 @@ void tablero::EscArchivo()
     }
 }
 
+// verifica si el movimiento se hizo en una casilla valida
 bool tablero::casillavalida( int posfila, int poscolumna)
 {
     return casillas[posfila][poscolumna]->getidd() == 'O';
 }
 
+// setter para casillas
 void tablero::setCasillas(ficha* casillas[filas][columnas])
 {
     for (int i = 0; i < filas; i++)
@@ -381,6 +390,7 @@ void tablero::setCasillas(ficha* casillas[filas][columnas])
     }
 }
 
+// getter para casillas
 void tablero::getCasillas(ficha* casillas[filas][columnas])
 {
     for (int i = 0; i < filas; i++)
@@ -392,6 +402,7 @@ void tablero::getCasillas(ficha* casillas[filas][columnas])
     }
 }
 
+// cuenta la cantidad total de fichas de los jugadores en el tablero
 int tablero::totalfichas()
 {
     unsigned short int cont=0;
@@ -405,6 +416,7 @@ int tablero::totalfichas()
     return cont;
 }
 
+// cuenta las fichas de cada jugador y dice quien gano
 void tablero::win()
 {
     unsigned short int c1=0, c2=0;
